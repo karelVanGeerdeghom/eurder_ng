@@ -63,7 +63,10 @@
               "buildTarget": "eurder:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "port": 8008
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
