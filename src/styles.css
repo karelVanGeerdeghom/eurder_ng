@@ -115,9 +115,8 @@ form {
   margin-bottom: .5rem;
 }
 
-.form-control, .form-select {
+.form-control {
   width: 100%;
-  height: calc(1.5em + .75rem + 2px);
 
   font-size: 1rem;
   font-weight: 400;
@@ -127,6 +126,18 @@ form {
   padding-right: 0.75rem;
   padding-bottom: 0.375rem;
   padding-left: 0.75rem;
+}
+
+.form-input, .form-select {
+  height: calc(1.5em + .75rem + 2px);
+}
+
+.form-textarea {
+  height: calc(6em + .75rem + 2px);
+}
+
+textarea {
+  resize: none;
 }
 
 .btn:not(:disabled):not(.disabled) {

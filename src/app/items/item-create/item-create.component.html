@@ -7,23 +7,24 @@
         <div class="row">
           <div class="col-4">
             <label class="form-label" for="name">Name</label>
-            <input class="form-control" id="name" name="name" formControlName="name" type="text"/>
+            <input class="form-control form-input" id="name" name="name" formControlName="name" type="text"/>
           </div>
         </div>
         <div class="row">
           <div class="col-4">
             <label class="form-label" for="description">Description</label>
-            <input class="form-control" id="description" name="description" formControlName="description" type="text"/>
+            <textarea class="form-control form-textarea" id="description" name="description" formControlName="description"></textarea>
+            <p>255 / 255</p>
           </div>
         </div>
         <div class="row">
           <div class="col-1">
             <label class="form-label" for="priceAmount">Price (in {{ defaultCurrency | priceCurrency }})</label>
-            <input class="form-control" id="priceAmount" name="priceAmount" formControlName="priceAmount" type="number"/>
+            <input class="form-control form-input" id="priceAmount" name="priceAmount" formControlName="priceAmount" type="number"/>
           </div>
           <div class="col-1">
             <label class="form-label" for="amountInStock">Amount in stock</label>
-            <input class="form-control" id="amountInStock" name="amountInStock" formControlName="amountInStock" type="number"/>
+            <input class="form-control form-input" id="amountInStock" name="amountInStock" formControlName="amountInStock" type="number"/>
           </div>
         </div>
         <div class="row">
