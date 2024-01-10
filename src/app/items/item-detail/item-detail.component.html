@@ -1,0 +1,17 @@
+<div *ngIf="item; else elseBlock">
+  <dl>
+    <dt>Name</dt>
+    <dd>{{ item.name }}</dd>
+    <dt>Description</dt>
+    <dd>{{ item.description }}</dd>
+    <dt>Price</dt>
+    <dd>{{ item.price.currency | priceCurrency  }} {{ item.price.amount }}</dd>
+    <dt>Amount in stock</dt>
+    <dd>{{ item.amountInStock }}</dd>
+  </dl>
+  <div>
+    <button [routerLink]="['/items', item.id, 'update']">Update</button>
+    <button [routerLink]="['/items']">Back</button>
+  </div>
+</div>
+<ng-template #elseBlock>Loading</ng-template>

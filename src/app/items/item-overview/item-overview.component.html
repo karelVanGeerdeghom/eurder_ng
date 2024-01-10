@@ -1,0 +1,10 @@
+<div>
+  <input id="itemNameSearch"
+         name="itemNameSearch"
+         placeholder="Search"
+         [(ngModel)]="itemNameSearch"
+  >
+</div>
+<div *ngFor="let item of items | itemNameFilter: itemNameSearch" [routerLink]="['/items/', item.id]">
+  <p>{{ item.name }}</p>
+</div>
