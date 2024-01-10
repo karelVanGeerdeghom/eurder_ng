@@ -6,6 +6,8 @@ import {FormsModule} from "@angular/forms";
 import {ItemNameFilterPipe} from "../pipe/item-name-filter.pipe";
 import {Router, RouterLink} from "@angular/router";
 import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
+import {ItemStockLabelPipe} from "../pipe/item-stock-label.pipe";
+import {ItemStockImagePipe} from "../pipe/item-stock-image.pipe";
 
 @Component({
   selector: 'app-item-overview',
@@ -15,7 +17,9 @@ import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
     FormsModule,
     ItemNameFilterPipe,
     RouterLink,
-    PriceCurrencyPipe
+    PriceCurrencyPipe,
+    ItemStockLabelPipe,
+    ItemStockImagePipe
   ],
   templateUrl: './item-overview.component.html',
   styleUrl: './item-overview.component.css'

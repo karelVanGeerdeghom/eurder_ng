@@ -2,10 +2,13 @@ import {Component, OnInit} from '@angular/core';
 import {ItemDto} from "../dto/ItemDto";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ItemService} from "../service/item.service";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
 import {FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ItemNameFilterPipe} from "../pipe/item-name-filter.pipe";
+import {
+  ItemDescriptionLengthCounterComponent
+} from "../item-description-length-counter/item-description-length-counter.component";
 
 @Component({
   selector: 'app-item-update',
@@ -17,13 +20,15 @@ import {ItemNameFilterPipe} from "../pipe/item-name-filter.pipe";
     FormsModule,
     ItemNameFilterPipe,
     NgForOf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ItemDescriptionLengthCounterComponent,
+    NgClass
   ],
   templateUrl: './item-update.component.html',
   styleUrl: './item-update.component.css'
 })
 export class ItemUpdateComponent implements OnInit {
-  private _item: ItemDto | undefined;
+  private _itemDto: ItemDto | undefined;
   private _itemForm = this.formBuilder.group({
     name: ['', [Validators.required]],
     description: ['', [Validators.required]],
@@ -43,37 +48,53 @@ export class ItemUpdateComponent implements OnInit {
 
   getItem(itemId: number) {
     this.itemService.findById(itemId).subscribe(item => {
-      this._item = item;
-      this._itemForm.controls['name'].patchValue(this._item!.name);
-      this._itemForm.controls['description'].patchValue(this._item!.description);
-      this._itemForm.controls['priceAmount'].patchValue(this._item!.price.amount);
-      this._itemForm.controls['amountInStock'].patchValue(this._item!.amountInStock);
+      this._itemDto = item;
+      this._itemForm.controls['name'].patchValue(this._itemDto!.name);
+      this._itemForm.controls['description'].patchValue(this._itemDto!.description);
+      this._itemForm.controls['priceAmount'].patchValue(this._itemDto!.price.amount);
+      this._itemForm.controls['amountInStock'].patchValue(this._itemDto!.amountInStock);
     });
   }
 
-  updateItem(item: ItemDto) {
+  updateItem(itemDto: ItemDto) {
     if (this._itemForm.valid) {
       let updateItemDto = {
         name: this._itemForm.value.name!,
         description: this._itemForm.value.description!,
         price: {
           amount: this._itemForm.value.priceAmount!,
-          currency: this._item!.price.currency,
+          currency: this._itemDto!.price.currency,
         },
         amountInStock: this._itemForm.value.amountInStock!,
       }
 
-      this.itemService.updateItem(item.id, updateItemDto).subscribe(item => {
-        this.router.navigateByUrl(`items/${item.id}`);
+      this.itemService.updateItem(itemDto.id, updateItemDto).subscribe(itemDto => {
+        this.router.navigateByUrl(`items/${itemDto.id}`);
       });
     }
   }
 
-  get item() {
-    return this._item;
+  get itemDto() {
+    return this._itemDto;
   }
 
   get itemForm() {
     return this._itemForm;
+  }
+
+  get name() {
+    return this._itemForm.get('name');
+  }
+
+  get description() {
+    return this._itemForm.get('description');
+  }
+
+  get priceAmount() {
+    return this._itemForm.get('priceAmount');
+  }
+
+  get amountInStock() {
+    return this._itemForm.get('amountInStock');
   }
 }

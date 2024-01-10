@@ -24,8 +24,8 @@
         <div class="card-footer">
           <div>Price: {{ item.price.currency | priceCurrency  }} {{ item.price.amount }}</div>
           <div class="stock">
-            <span>{{ item.amountInStock }}</span>
-            <img class="icon" src="assets/images/warning-icon.png" alt="warning">
+            <span>{{ item.amountInStock | itemStockLabel }}</span>
+            <img class="icon" src="assets/images/{{ item.amountInStock | itemStockImage }}" alt="warning">
           </div>
         </div>
       </li>

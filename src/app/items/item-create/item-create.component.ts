@@ -2,8 +2,11 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ItemService} from "../service/item.service";
-import {NgIf} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
+import {
+  ItemDescriptionLengthCounterComponent
+} from "../item-description-length-counter/item-description-length-counter.component";
 
 @Component({
   selector: 'app-item-create',
@@ -13,7 +16,9 @@ import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
     NgIf,
     PriceCurrencyPipe,
     ReactiveFormsModule,
-    RouterLink
+    RouterLink,
+    ItemDescriptionLengthCounterComponent,
+    NgClass,
   ],
   templateUrl: './item-create.component.html',
   styleUrl: './item-create.component.css'
@@ -22,16 +27,17 @@ export class ItemCreateComponent {
   private _defaultCurrency = 'EUR';
   private _itemForm = this.formBuilder.group({
     name: ['name', [Validators.required]],
-    description: ['description', [Validators.required]],
-    priceAmount: [10.0, [Validators.required]],
-    amountInStock: [10, [Validators.required]],
+    description: ['description', [Validators.required, Validators.maxLength(255)]],
+    priceAmount: [10.0, [Validators.required, Validators.min(0)]],
+    amountInStock: [10, [Validators.required, Validators.min(0)]],
   });
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private itemService: ItemService,
-    private router: Router) {}
+    private router: Router
+  ) {}
 
   createItem() {
     if (this._itemForm.valid) {
@@ -57,5 +63,21 @@ export class ItemCreateComponent {
 
   get itemForm() {
     return this._itemForm;
+  }
+
+  get name() {
+    return this._itemForm.get('name');
+  }
+
+  get description() {
+    return this._itemForm.get('description');
+  }
+
+  get priceAmount() {
+    return this._itemForm.get('priceAmount');
+  }
+
+  get amountInStock() {
+    return this._itemForm.get('amountInStock');
   }
 }

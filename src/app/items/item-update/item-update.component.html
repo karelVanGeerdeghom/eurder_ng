@@ -2,33 +2,34 @@
   <section>
     <h3 class="section-title">Update item</h3>
 
-    <div *ngIf="item; else elseBlock">
+    <div *ngIf="itemDto; else elseBlock">
       <form [formGroup]="itemForm">
         <div class="row">
           <div class="col-4">
             <label class="form-label" for="name">Name</label>
-            <input class="form-control form-input" id="name" name="name" formControlName="name" type="text"/>
+            <input class="form-control form-input" [ngClass]="name?.invalid && (name?.dirty || name?.touched) ? 'invalid' : ''" id="name" name="name" formControlName="name" type="text"/>
           </div>
         </div>
         <div class="row">
           <div class="col-4">
             <label class="form-label" for="description">Description</label>
-            <textarea class="form-control form-textarea" id="description" name="description" formControlName="description"></textarea>
+            <textarea class="form-control form-textarea" [ngClass]="description?.invalid && (description?.dirty || description?.touched) ? 'invalid' : ''" id="description" name="description" formControlName="description"></textarea>
+            <app-item-description-length-counter [description]="itemForm.value.description!"></app-item-description-length-counter>
           </div>
         </div>
         <div class="row">
           <div class="col-1">
-            <label class="form-label" for="priceAmount">Price (in {{ item.price.currency | priceCurrency }})</label>
-            <input class="form-control form-input" id="priceAmount" name="priceAmount" formControlName="priceAmount" type="number"/>
+            <label class="form-label" for="priceAmount">Price (in {{ itemDto!.price.currency | priceCurrency }})</label>
+            <input class="form-control form-input" [ngClass]="priceAmount?.invalid && (priceAmount?.dirty || priceAmount?.touched) ? 'invalid' : ''" id="priceAmount" name="priceAmount" formControlName="priceAmount" type="number"/>
           </div>
           <div class="col-1">
             <label class="form-label" for="amountInStock">Amount in stock</label>
-            <input class="form-control form-input" id="amountInStock" name="amountInStock" formControlName="amountInStock" type="number"/>
+            <input class="form-control form-input" [ngClass]="amountInStock?.invalid && (amountInStock?.dirty || amountInStock?.touched) ? 'invalid' : ''" id="amountInStock" name="amountInStock" formControlName="amountInStock" type="number"/>
           </div>
         </div>
         <div class="row">
-          <button class="col-4 btn btn-create" type="button" (click)="updateItem(item)">UPDATE</button>
-          <button class="col-1 btn" type="button" [routerLink]="['/items', item.id]">CANCEL</button>
+          <button class="col-4 btn btn-create" type="button" (click)="updateItem(itemDto!)">UPDATE</button>
+          <button class="col-1 btn" type="button" [routerLink]="['/items', itemDto!.id!]">CANCEL</button>
         </div>
       </form>
     </div>
