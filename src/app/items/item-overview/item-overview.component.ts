@@ -1,10 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ItemService} from "../service/item.service";
-import {Item} from "../model/Item";
+import {ItemDto} from "../dto/ItemDto";
 import {NgForOf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {ItemNameFilterPipe} from "../pipe/item-name-filter.pipe";
 import {Router, RouterLink} from "@angular/router";
+import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
 
 @Component({
   selector: 'app-item-overview',
@@ -13,7 +14,8 @@ import {Router, RouterLink} from "@angular/router";
     NgForOf,
     FormsModule,
     ItemNameFilterPipe,
-    RouterLink
+    RouterLink,
+    PriceCurrencyPipe
   ],
   templateUrl: './item-overview.component.html',
   styleUrl: './item-overview.component.css'
@@ -21,17 +23,17 @@ import {Router, RouterLink} from "@angular/router";
 export class ItemOverviewComponent implements OnInit {
   private itemService: ItemService = inject(ItemService);
 
-  public _items!: Item[];
+  public _items!: ItemDto[];
   public itemNameSearch: string | undefined;
 
   constructor(public router: Router) {}
 
   ngOnInit() {
-    this.getItems();
+    this.findAllItems();
   }
 
-  getItems(): void {
-    this.itemService.getItems().subscribe(items => this._items = items);
+  findAllItems(): void {
+    this.itemService.findAllItems().subscribe(items => this._items = items);
   }
 
   get items() {

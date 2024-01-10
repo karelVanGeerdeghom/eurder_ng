@@ -1,10 +1,36 @@
-<div>
-  <input id="itemNameSearch"
-         name="itemNameSearch"
-         placeholder="Search"
-         [(ngModel)]="itemNameSearch"
-  >
-</div>
-<div *ngFor="let item of items | itemNameFilter: itemNameSearch" [routerLink]="['/items/', item.id]">
-  <p>{{ item.name }}</p>
-</div>
+<main>
+  <section class="section-title">
+    <h3>Items</h3>
+    <input id="itemNameSearch"
+           name="itemNameSearch"
+           placeholder="Search"
+           [(ngModel)]="itemNameSearch"
+    >
+  </section>
+
+  <section>
+    <form>
+      <div class="row">
+        <button [routerLink]="['/items/create']" class="col-1 btn">CREATE</button>
+      </div>
+    </form>
+  </section>
+
+  <section>
+    <ul class="card-list">
+      <li class="card" *ngFor="let item of items | itemNameFilter: itemNameSearch" [routerLink]="['/items/', item.id]">
+        <div class="card-title">{{ item.name }}</div>
+        <img class="card-image" src="assets/images/item-image.png" alt="item image">
+        <div class="card-footer">
+          <div>Price: {{ item.price.currency | priceCurrency  }} {{ item.price.amount }}</div>
+          <div class="stock">
+            <span>{{ item.amountInStock }}</span>
+            <img class="icon" src="assets/images/warning-icon.png" alt="warning">
+          </div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+
+</main>

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import {Item} from "../model/Item";
+import {ItemDto} from "../dto/ItemDto";
 
 @Pipe({
   name: 'itemNameFilter',
@@ -7,7 +7,7 @@ import {Item} from "../model/Item";
 })
 export class ItemNameFilterPipe implements PipeTransform {
 
-  transform(items: Item[] | null, nameFilter: string | undefined): Item[] | null {
+  transform(items: ItemDto[] | null, nameFilter: string | undefined): ItemDto[] | null {
     if (items !== null && nameFilter !== undefined) {
       return items.filter(item => item.name.toLocaleLowerCase().indexOf(nameFilter.toLocaleLowerCase()) === 0);
     }

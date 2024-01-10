@@ -1,8 +1,8 @@
 <main>
   <section>
-    <h3 class="section-title">Update item</h3>
+    <h3 class="section-title">Create item</h3>
 
-    <div *ngIf="item; else elseBlock">
+    <div>
       <form [formGroup]="itemForm">
         <div class="row">
           <div class="col-4">
@@ -18,7 +18,7 @@
         </div>
         <div class="row">
           <div class="col-1">
-            <label class="form-label" for="priceAmount">Price (in {{ item.price.currency | priceCurrency }})</label>
+            <label class="form-label" for="priceAmount">Price (in {{ defaultCurrency | priceCurrency }})</label>
             <input class="form-control" id="priceAmount" name="priceAmount" formControlName="priceAmount" type="number"/>
           </div>
           <div class="col-1">
@@ -27,11 +27,10 @@
           </div>
         </div>
         <div class="row">
-          <button class="col-4 btn btn-create" type="button" (click)="updateItem(item)">UPDATE</button>
-          <button class="col-1 btn" type="button" [routerLink]="['/items', item.id]">CANCEL</button>
+          <button class="col-4 btn btn-create" type="button" (click)="createItem()">CREATE</button>
+          <button class="col-1 btn" type="button" [routerLink]="['/items']">CANCEL</button>
         </div>
       </form>
     </div>
-    <ng-template #elseBlock>Loading</ng-template>
   </section>
 </main>

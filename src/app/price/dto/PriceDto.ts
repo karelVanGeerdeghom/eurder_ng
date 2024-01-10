@@ -1,4 +1,4 @@
-export interface Price {
+export interface PriceDto {
   amount: number,
   currency: string
 }

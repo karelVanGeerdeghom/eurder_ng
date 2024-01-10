@@ -1,17 +1,67 @@
-<div *ngIf="item; else elseBlock">
-  <dl>
-    <dt>Name</dt>
-    <dd>{{ item.name }}</dd>
-    <dt>Description</dt>
-    <dd>{{ item.description }}</dd>
-    <dt>Price</dt>
-    <dd>{{ item.price.currency | priceCurrency  }} {{ item.price.amount }}</dd>
-    <dt>Amount in stock</dt>
-    <dd>{{ item.amountInStock }}</dd>
-  </dl>
-  <div>
-    <button [routerLink]="['/items', item.id, 'update']">Update</button>
-    <button [routerLink]="['/items']">Back</button>
-  </div>
-</div>
-<ng-template #elseBlock>Loading</ng-template>
+<main>
+  <section>
+    <div *ngIf="item; else elseBlock">
+      <h3 class="section-title">{{ item.name }}</h3>
+
+      <form>
+        <div class="row">
+          <div class="col-4">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-control" id="name" name="name" type="text" value="{{ item.name }}" disabled/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <label class="form-label" for="description">Description</label>
+            <input class="form-control" id="description" name="description" type="text" value="{{ item.description }}" disabled/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-1">
+            <label class="form-label" for="priceAmount">Price (in {{ item.price.currency | priceCurrency }})</label>
+            <input class="form-control" id="priceAmount" name="priceAmount" type="number" value="{{ item.price.amount }}" disabled/>
+          </div>
+          <div class="col-1">
+            <label class="form-label" for="amountInStock">Amount in stock</label>
+            <input class="form-control" id="amountInStock" name="amountInStock" type="number" value="{{ item.amountInStock }}" disabled/>
+          </div>
+        </div>
+        <div class="row">
+          <button class="col-4 btn btn-create" type="button" [routerLink]="['/items', item.id, 'update']">ADD TO BASKET</button>
+          <button class="col-1 btn btn-delete" type="button" (click)="deleteItem(item)">DELETE</button>
+          <button class="col-1 btn btn-create" type="button" [routerLink]="['/items', item.id, 'update']">EDIT</button>
+          <button class="col-1 btn" type="button" [routerLink]="['/items']">BACK</button>
+        </div>
+      </form>
+    </div>
+    <ng-template #elseBlock>Loading</ng-template>
+  </section>
+</main>
+
+
+
+
+
+
+
+
+
+
+
+<!--<div *ngIf="item; else elseBlock">-->
+<!--  <dl>-->
+<!--    <dt>Name</dt>-->
+<!--    <dd>{{ item.name }}</dd>-->
+<!--    <dt>Description</dt>-->
+<!--    <dd>{{ item.description }}</dd>-->
+<!--    <dt>Price</dt>-->
+<!--    <dd>{{ item.price.currency | priceCurrency  }} {{ item.price.amount }}</dd>-->
+<!--    <dt>Amount in stock</dt>-->
+<!--    <dd>{{ item.amountInStock }}</dd>-->
+<!--  </dl>-->
+<!--  <div>-->
+<!--    <button [routerLink]="['/items', item.id, 'update']">Update</button>-->
+<!--    <button [routerLink]="['/items']">Back</button>-->
+<!--  </div>-->
+<!--</div>-->
+<!--<ng-template #elseBlock>Loading</ng-template>-->

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {ItemService} from "../service/item.service";
-import {Item} from "../model/Item";
+import {ItemDto} from "../dto/ItemDto";
 import {NgIf} from "@angular/common";
 import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-item-detail',
@@ -11,22 +12,30 @@ import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
   imports: [
     NgIf,
     PriceCurrencyPipe,
-    RouterLink
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule
   ],
   templateUrl: './item-detail.component.html',
   styleUrl: './item-detail.component.css'
 })
 export class ItemDetailComponent implements OnInit {
-  private _item: Item | undefined;
+  private _item: ItemDto | undefined;
 
-  constructor(private activatedRoute: ActivatedRoute, private itemService: ItemService) {}
+  constructor(private activatedRoute: ActivatedRoute, private itemService: ItemService, private router: Router) {}
 
   ngOnInit() {
-    this.getItem(this.activatedRoute.snapshot.params['id']);
+    this.findById(this.activatedRoute.snapshot.params['id']);
   }
 
-  getItem(itemId: number) {
-    this.itemService.getItem(itemId).subscribe(item => this._item = item);
+  findById(itemId: number) {
+    this.itemService.findById(itemId).subscribe(item => this._item = item);
+  }
+
+  deleteItem(item: ItemDto) {
+    this.itemService.deleteItem(item.id).subscribe(() => {
+      this.router.navigateByUrl('items');
+    });
   }
 
   get item() {
