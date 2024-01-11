@@ -26,9 +26,9 @@ import {
 export class ItemCreateComponent {
   private _defaultCurrency = 'EUR';
   private _itemForm = this.formBuilder.group({
-    name: ['name', [Validators.required]],
+    name: [Math.random().toString(36).substring(2,9), [Validators.required]],
     description: ['description', [Validators.required, Validators.maxLength(255)]],
-    priceAmount: [10.0, [Validators.required, Validators.min(0)]],
+    priceAmount: [parseFloat((Math.random() * 90 + 10).toFixed(2)), [Validators.required, Validators.min(0)]],
     amountInStock: [10, [Validators.required, Validators.min(0)]],
   });
 
@@ -36,7 +36,9 @@ export class ItemCreateComponent {
     private formBuilder: FormBuilder,
     private itemService: ItemService,
     private router: Router
-  ) {}
+  ) {
+    console.log()
+  }
 
   createItem() {
     if (this._itemForm.valid) {

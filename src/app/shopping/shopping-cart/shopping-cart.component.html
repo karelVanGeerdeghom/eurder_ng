@@ -22,14 +22,14 @@
       <div class="col-1 form-label"><h3>Total</h3></div>
       <div class="col-1"></div>
       <div class="col-1"></div>
-      <div class="col-1"><p>{{ defaultCurrency | priceCurrency }} {{ getShoppingCartTotal() }}</p></div>
+      <div class="col-1"><p>{{ defaultCurrency | priceCurrency }} {{ getShoppingCartTotal() | number: '1.2-2' }}</p></div>
       <div class="col-1"></div>
     </div>
   </section>
 
   <section>
     <div class="row">
-      <button class="btn btn-create col-4">Order</button>
+      <button class="btn btn-create col-4" (click)="placeOrder()">Order</button>
     </div>
   </section>
 </main>

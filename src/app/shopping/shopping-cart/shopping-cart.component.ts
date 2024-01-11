@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import {ShoppingCartService} from "../service/shopping-cart.service";
-import {NgForOf} from "@angular/common";
+import {DecimalPipe, NgForOf} from "@angular/common";
 import {ShoppingCartItemComponent} from "../shopping-cart-item/shopping-cart-item.component";
 import {FormsModule} from "@angular/forms";
 import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -12,7 +13,8 @@ import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
     NgForOf,
     ShoppingCartItemComponent,
     FormsModule,
-    PriceCurrencyPipe
+    PriceCurrencyPipe,
+    DecimalPipe
   ],
   templateUrl: './shopping-cart.component.html',
   styleUrl: './shopping-cart.component.css'
@@ -20,7 +22,7 @@ import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
 export class ShoppingCartComponent {
   private _defaultCurrency = 'EUR';
 
-  constructor(private shoppingCartService: ShoppingCartService) {
+  constructor(private router: Router, private shoppingCartService: ShoppingCartService) {
   }
 
   getShoppingCartItems() {
@@ -29,6 +31,15 @@ export class ShoppingCartComponent {
 
   getShoppingCartTotal() {
     return this.shoppingCartService.getShoppingCartTotal();
+  }
+
+  placeOrder() {
+    this.shoppingCartService.placeOrder().subscribe((orderDto) => {
+      this.shoppingCartService.emptyCart();
+      if (confirm('Placed order')) {
+        this.router.navigateByUrl('/items');
+      }
+    });
   }
 
   get defaultCurrency() {

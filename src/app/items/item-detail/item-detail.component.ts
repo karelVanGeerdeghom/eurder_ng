@@ -46,6 +46,7 @@ export class ItemDetailComponent implements OnInit {
 
   addToCart(item: ItemDto) {
     this.shoppingCartService.addToCart(item);
+    alert('Added to cart');
   }
 
   get item() {

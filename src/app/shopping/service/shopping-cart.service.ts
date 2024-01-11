@@ -1,42 +1,23 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ItemDto} from "../../items/dto/ItemDto";
 import {ShoppingCartItem} from "../dto/ShoppingCartItem";
-import {PriceDto} from "../../price/dto/PriceDto";
+import {CreateOrderDto} from "../dto/CreateOrderDto";
+import {environment} from "../../../environments/environment";
+import {HttpClient} from "@angular/common/http";
+import {OrderDto} from "../dto/OrderDto";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
-  private _shoppingCartItems: ShoppingCartItem[] = [
-    {
-      amount: 1,
-      item: {
-        id: 1,
-        name: 'name',
-        description: 'description',
-        price: {
-          amount: 10,
-          currency: 'EUR'
-        },
-        amountInStock: 10
-      }
-    },
-    {
-      amount: 1,
-      item: {
-        id: 1,
-        name: 'name',
-        description: 'description',
-        price: {
-          amount: 10,
-          currency: 'EUR'
-        },
-        amountInStock: 10
-      }
-    }
-  ];
+  private readonly _url: string;
+  private _shoppingCartItems: ShoppingCartItem[] = [];
+  private http: HttpClient = inject(HttpClient);
 
-  constructor() { }
+  constructor() {
+    this._url = `${environment.backendUrl}/orders`;
+  }
 
   addToCart(itemDto: ItemDto) {
     let shoppingCartItem = {
@@ -60,5 +41,30 @@ export class ShoppingCartService {
       (shoppingCartTotal, shoppingCartItem) => shoppingCartTotal + shoppingCartItem.item.price.amount * shoppingCartItem.amount,
       0.0
     )
+  }
+
+  placeOrder(): Observable<OrderDto> {
+    let createOrderDto: CreateOrderDto = {
+      orderLines: [],
+      orderDate: new Date()
+    }
+
+    this._shoppingCartItems.forEach(shoppingCartItem => {
+      createOrderDto.orderLines.push({
+        itemId: shoppingCartItem.item.id,
+        amountInOrder: shoppingCartItem.amount
+      });
+    });
+
+    return this.http.post<OrderDto>(this._url, createOrderDto, {
+      headers: {
+        email: 'firstName.lastName@mail.com',
+        password: 'password'
+      }
+    });
+  }
+
+  emptyCart() {
+    this._shoppingCartItems = [];
   }
 }
