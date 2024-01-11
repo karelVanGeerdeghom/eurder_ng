@@ -5,6 +5,7 @@ import {ItemDto} from "../dto/ItemDto";
 import {NgIf} from "@angular/common";
 import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {ShoppingCartService} from "../../shopping/service/shopping-cart.service";
 
 @Component({
   selector: 'app-item-detail',
@@ -22,7 +23,12 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 export class ItemDetailComponent implements OnInit {
   private _item: ItemDto | undefined;
 
-  constructor(private activatedRoute: ActivatedRoute, private itemService: ItemService, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private itemService: ItemService,
+    private shoppingCartService: ShoppingCartService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.findById(this.activatedRoute.snapshot.params['id']);
@@ -36,6 +42,10 @@ export class ItemDetailComponent implements OnInit {
     this.itemService.deleteItem(item.id).subscribe(() => {
       this.router.navigateByUrl('items');
     });
+  }
+
+  addToCart(item: ItemDto) {
+    this.shoppingCartService.addToCart(item);
   }
 
   get item() {

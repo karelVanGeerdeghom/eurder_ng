@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {ItemService} from "../service/item.service";
 import {NgClass, NgIf} from "@angular/common";
 import {PriceCurrencyPipe} from "../../price/pipe/price-currency.pipe";
@@ -33,7 +33,6 @@ export class ItemCreateComponent {
   });
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private itemService: ItemService,
     private router: Router

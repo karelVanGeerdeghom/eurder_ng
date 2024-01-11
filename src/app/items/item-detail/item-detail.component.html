@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="row">
-          <button class="col-4 btn btn-create" type="button" [routerLink]="['/items', item.id, 'update']">ADD TO BASKET</button>
+          <button class="col-4 btn btn-create" type="button" (click)="addToCart(item)">ADD TO CART</button>
           <button class="col-1 btn btn-delete" type="button" (click)="deleteItem(item)">DELETE</button>
           <button class="col-1 btn btn-create" type="button" [routerLink]="['/items', item.id, 'update']">EDIT</button>
           <button class="col-1 btn" type="button" [routerLink]="['/items']">BACK</button>

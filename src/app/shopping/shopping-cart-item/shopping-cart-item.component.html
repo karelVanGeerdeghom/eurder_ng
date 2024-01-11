@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-1">{{ shoppingCartItem.item.name }}</div>
+  <div class="col-1">
+    <input id="amount"
+           name="amount"
+           type="number"
+           class="form-control form-input"
+           [(ngModel)]="shoppingCartItem.amount"
+    >
+  </div>
+  <div class="col-1">{{ shoppingCartItem.item.price.currency | priceCurrency }} {{ shoppingCartItem.item.price.amount }}</div>
+  <div class="col-1">{{ shoppingCartItem.item.price.currency | priceCurrency }} {{ shoppingCartItem.amount * shoppingCartItem.item.price.amount }}</div>
+  <div class="col-1"><button class="btn btn-delete" (click)="removeFromCart()">X</button></div>
+</div>

@@ -1,0 +1,35 @@
+<main>
+  <section>
+    <h3 class="section-title">Your shopping cart</h3>
+
+    <div class="row">
+      <div class="col-1 form-label"><h3>Product</h3></div>
+      <div class="col-1 form-label"><h3>Amount</h3></div>
+      <div class="col-1 form-label"><h3>Price</h3></div>
+      <div class="col-1 form-label"><h3>Subtotal</h3></div>
+      <div class="col-1"></div>
+    </div>
+  </section>
+
+  <section class="section-title">
+    <div *ngFor="let shoppingCartItem of getShoppingCartItems()">
+      <app-shopping-cart-item [shoppingCartItem]="shoppingCartItem"></app-shopping-cart-item>
+    </div>
+  </section>
+
+  <section class="section-title">
+    <div class="row">
+      <div class="col-1 form-label"><h3>Total</h3></div>
+      <div class="col-1"></div>
+      <div class="col-1"></div>
+      <div class="col-1"><p>{{ defaultCurrency | priceCurrency }} {{ getShoppingCartTotal() }}</p></div>
+      <div class="col-1"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="row">
+      <button class="btn btn-create col-4">Order</button>
+    </div>
+  </section>
+</main>
